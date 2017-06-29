@@ -13,9 +13,14 @@ dds::ReturnCode_t MessageTypeSupport::register_type(
 	const dds::DomainParticipant* domain,
 	const char* type_name) {
 
-	hello::MessageTypeSupport* ts = new hello::MessageTypeSupportImpl;
+	hello::MessageTypeSupport* ts;
+	dds::ReturnCode_t ret;
+	
+	ts = new hello::MessageTypeSupportImpl;
+	ret = (dds::ReturnCode_t)ts->register_type((DDS::DomainParticipant_var)domain, type_name);
+	delete ts;
 
-	return (dds::ReturnCode_t)ts->register_type((DDS::DomainParticipant_var)domain, type_name);
+	return ret;
 }
 
 const char* MessageTypeSupport::get_type_name() {
